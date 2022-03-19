@@ -1,0 +1,10 @@
+{
+  "name": "unity-editor-jobs",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "Marcelo Ott",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}

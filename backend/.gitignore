@@ -1,0 +1,29 @@
+**/node_modules/
+**/saves/
+**/decoration/
+
+# Builds
+*.apk
+*.unitypackage
+*/builds/
+build/
+*build.zip
+AssetBundles*
+spreadsheets/*
+
+**.eslintcache
+*.env
+*.env.*
+
+# Backend
+logs/
+sienge/**
+.cache*
+metrics/**
+metrics_test/**
+tempAssets/**
+test-report.html
+Files/*
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
