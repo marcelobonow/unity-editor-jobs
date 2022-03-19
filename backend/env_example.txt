@@ -1,31 +1,8 @@
 NODE_ENV=dev
-REMOTE_DB_PASSWORD=db_password
-
-DB_HOST=db
-DB_PORT=3306
-DB_USER=db_user
-DB_PASSWORD=db_password
-DB_DATABASE=db_database
 
 SERVER_PORT=3000
 SERVER_PORT_TEST=server_port_test
 SECRET=server_secret
+LOG_FOLDER="logs/"
 
-EMAIL_ADDRESS=email@teste.com
-EMAIL_PASSWORD=password
-
-AWS_ACCESS_KEY_ID=123456789QWERTY
-AWS_SECRET_ACCESS_KEY=123456789QWERTY
-
-SSH_IP=127.0.0.1
-SSH_USER=ssh-user
-SSH_KEY_LOCATION=/folder/key
-
-SIENGE_USERNAME=sienge_user
-SIENGE_PASSWORD=password123456789qwerty
-SIENGE_URL=http://url.com
-SIENGE_SUBDOMAIN=subdomain
-SIENGE_API_SUFFIX=public/api/v1
-
-SERVER_URL=http://localhost:3000
-DATABASE_URL=mysql://application:password@localhost:3303/application
+UNITY_EDITOR_PATH=D:\Program Files\Unity\2020.3.11f1\Editor\Unity.exe
