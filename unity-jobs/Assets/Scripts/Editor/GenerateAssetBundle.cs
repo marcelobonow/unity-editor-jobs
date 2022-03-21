@@ -18,14 +18,24 @@ public class GenerateAssetBundle : MonoBehaviour
         Debug.Log("Testando criar prefab");
         var referencePath = "Assets/Meshes/chairToCreate.fbx";
         var referenceObject = AssetDatabase.LoadAssetAtPath<GameObject>(referencePath);
-        var gameobjectOnScene = Instantiate(referenceObject);
+        var gameObjectOnScene = Instantiate(referenceObject);
         var prefabPath = "Assets/Prefabs/chairToCreate.prefab";
-        PrefabUtility.SaveAsPrefabAsset(gameobjectOnScene, prefabPath);
+        PrefabUtility.SaveAsPrefabAsset(gameObjectOnScene, prefabPath);
         AssetImporter.GetAtPath(prefabPath).SetAssetBundleNameAndVariant("tempBundle", "");
-        DestroyImmediate(gameobjectOnScene);
+        DestroyImmediate(gameObjectOnScene);
         BuildAssetBundles();
     }
 
+    public static void Centralize()
+    {
+        var referencePath = "Assets/Meshes/chairToTest.fbx";
+        var referenceObject = AssetDatabase.LoadAssetAtPath<GameObject>(referencePath);
+        var gameObjectOnScene = Instantiate(referenceObject);
+        NormalizeMesh.Centralize(gameObjectOnScene);
+        gameObjectOnScene = gameObjectOnScene.transform.parent.gameObject;
+        PrefabUtility.SaveAsPrefabAsset(gameObjectOnScene, "Assets/Meshes/chairToTest2.prefab");
+        //DestroyImmediate(gameObjectOnScene);
+    }
 
     private static void BuildAssetBundles()
     {

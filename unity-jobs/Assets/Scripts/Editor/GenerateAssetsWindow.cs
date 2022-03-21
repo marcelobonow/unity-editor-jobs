@@ -15,10 +15,18 @@ public class GenerateAssetsWindow : EditorWindow
         {
             GeneratePrefab();
         }
+        if (GUILayout.Button("Centralize"))
+        {
+            Centralize();
+        }
     }
 
     private void GeneratePrefab()
     {
         GenerateAssetBundle.CreatePrefab();
+    }
+    private void Centralize()
+    {
+        GenerateAssetBundle.Centralize();
     }
 }
