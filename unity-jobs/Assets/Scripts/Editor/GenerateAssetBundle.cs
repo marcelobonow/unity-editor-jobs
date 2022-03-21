@@ -28,13 +28,13 @@ public class GenerateAssetBundle : MonoBehaviour
 
     public static void Centralize()
     {
-        var referencePath = "Assets/Meshes/chairToTest.fbx";
+        var referencePath = "Assets/Meshes/shelfToTest.fbx";
         var referenceObject = AssetDatabase.LoadAssetAtPath<GameObject>(referencePath);
         var gameObjectOnScene = Instantiate(referenceObject);
         NormalizeMesh.Centralize(gameObjectOnScene);
         gameObjectOnScene = gameObjectOnScene.transform.parent.gameObject;
         PrefabUtility.SaveAsPrefabAsset(gameObjectOnScene, "Assets/Meshes/chairToTest2.prefab");
-        //DestroyImmediate(gameObjectOnScene);
+        DestroyImmediate(gameObjectOnScene);
     }
 
     private static void BuildAssetBundles()

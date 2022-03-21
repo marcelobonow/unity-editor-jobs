@@ -7,7 +7,6 @@ public class NormalizeMesh : MonoBehaviour
     public static void Centralize(GameObject gameObject)
     {
         var meshFilters = gameObject.GetComponentsInChildren<MeshFilter>(true);
-        var center = Vector3.zero;
         var maxBounds = Vector3.negativeInfinity;
         var minBounds = Vector3.positiveInfinity;
         foreach (var meshFilter in meshFilters)
@@ -20,11 +19,9 @@ public class NormalizeMesh : MonoBehaviour
                 maxBounds = Vector3.Max(maxBounds, meshFilter.transform.TransformPoint(vertices[i]));
                 minBounds = Vector3.Min(minBounds, meshFilter.transform.TransformPoint(vertices[i]));
             }
-            center += bounds.center + localPosition;
         }
 
-        center /= meshFilters.Length;
-
+        var center = (maxBounds + minBounds) / 2f;
         var newGameObject = new GameObject();
         newGameObject.name = gameObject.name;
         gameObject.transform.parent = newGameObject.transform;
@@ -32,7 +29,7 @@ public class NormalizeMesh : MonoBehaviour
         newGameObject.transform.position = Vector3.zero;
 
         var collider = gameObject.AddComponent<BoxCollider>();
-        collider.center = (maxBounds + minBounds) / 2f;
+        collider.center = center;
         collider.size = (maxBounds - minBounds);
     }
 }
