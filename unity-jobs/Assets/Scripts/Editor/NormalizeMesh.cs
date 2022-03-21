@@ -14,9 +14,13 @@ public class NormalizeMesh : MonoBehaviour
         {
             var bounds = meshFilter.sharedMesh.bounds;
             var localPosition = meshFilter.transform.position;
+            var vertices = meshFilter.sharedMesh.vertices;
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                maxBounds = Vector3.Max(maxBounds, meshFilter.transform.TransformPoint(vertices[i]));
+                minBounds = Vector3.Min(minBounds, meshFilter.transform.TransformPoint(vertices[i]));
+            }
             center += bounds.center + localPosition;
-            maxBounds = Vector3.Max(maxBounds, bounds.max + localPosition);
-            minBounds = Vector3.Min(minBounds, bounds.min - localPosition);
         }
 
         center /= meshFilters.Length;
@@ -26,9 +30,8 @@ public class NormalizeMesh : MonoBehaviour
         gameObject.transform.parent = newGameObject.transform;
         gameObject.transform.position -= center;
         newGameObject.transform.position = Vector3.zero;
-        //gameObject.transform.localPosition = Vector3.
 
-        var collider = newGameObject.AddComponent<BoxCollider>();
+        var collider = gameObject.AddComponent<BoxCollider>();
         collider.center = (maxBounds + minBounds) / 2f;
         collider.size = (maxBounds - minBounds);
     }
