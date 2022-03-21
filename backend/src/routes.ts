@@ -20,7 +20,7 @@ const unityProjectPath = process.env.UNITY_PROJECT_PATH;
 async function GenerateAssetBundle(req: Request, res: Response) {
   const context = "Generating asset bundle";
   LogInfo("Opening unity", context);
-  exec(`"${unityEditorPath}" -projectPath "${unityProjectPath}" -executeMethod GenerateAssetBundle.ExecuteMethod`, (error, stdout, stderr) => {
+  exec(`"${unityEditorPath}" -projectPath "${unityProjectPath}" -executeMethod GenerateAssetBundle.CreatePrefab`, (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
       res.status(500).send(error);

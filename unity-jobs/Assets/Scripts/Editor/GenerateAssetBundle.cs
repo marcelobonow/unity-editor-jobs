@@ -13,7 +13,6 @@ public class GenerateAssetBundle : MonoBehaviour
         EditorApplication.Exit(0);
     }
 
-    [ContextMenu("Test")]
     public static void CreatePrefab()
     {
         Debug.Log("Testando criar prefab");
