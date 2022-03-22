@@ -6,3 +6,7 @@ SECRET=server_secret
 LOG_FOLDER="logs/"
 
 UNITY_EDITOR_PATH=D:\Program Files\Unity\2020.3.11f1\Editor\Unity.exe
+UNITY_PROJECT_PATH=C:\unity-editor-jobs\unity-jobs
+
+REDIS_HOST=localhost
+REDIS_PORT=6379
