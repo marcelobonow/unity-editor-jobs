@@ -28,7 +28,7 @@ public class GenerateAssetBundle : MonoBehaviour
 
     public static void Centralize()
     {
-        var referencePath = "Assets/Meshes/shelfToTest.fbx";
+        var referencePath = "Assets/Tests/chairToTest.fbx";
         var referenceObject = AssetDatabase.LoadAssetAtPath<GameObject>(referencePath);
         var gameObjectOnScene = Instantiate(referenceObject);
         NormalizeMesh.Centralize(gameObjectOnScene);

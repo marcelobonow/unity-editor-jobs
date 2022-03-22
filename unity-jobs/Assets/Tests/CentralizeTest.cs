@@ -9,11 +9,31 @@ public class CentralizeTest : MonoBehaviour
     [Test]
     public void TestCentralize()
     {
-        var referencePath = "Assets/Meshes/chairToTest.fbx";
-        var referenceObject = AssetDatabase.LoadAssetAtPath<GameObject>(referencePath);
-        var gameObjectOnScene = Instantiate(referenceObject);
-        NormalizeMesh.Centralize(gameObjectOnScene);
+        var meshesToCentralize = new string[] { "Assets/Tests/benchToTest.fbx", "Assets/Tests/chairToTest.fbx", "Assets/Tests/shelfToTest.fbx" };
+        var meshesToTest = new string[] { "Assets/Tests/benchCentralized.prefab", "Assets/Tests/chairCentralized.prefab", "Assets/Tests/shelfCentralized.prefab" };
 
-        Assert.AreEqual(Vector3.zero, new Vector3(0, 0, 0));
+        for (int i = 0; i < meshesToCentralize.Length; i++)
+        {
+            var benchToCentralize = LoadAtPath(meshesToCentralize[i]);
+            var benchCentralized = LoadAtPath(meshesToTest[i]);
+
+            var gameObjectOnScene = Instantiate(benchToCentralize);
+            NormalizeMesh.Centralize(gameObjectOnScene);
+            gameObjectOnScene = gameObjectOnScene.transform.parent.gameObject;
+
+            PrefabUtility.SaveAsPrefabAsset(gameObjectOnScene, "Assets/Meshes/chairToTest2.prefab");
+
+            Assert.AreEqual(benchCentralized.transform.localPosition, benchCentralized.transform.localPosition);
+
+            var colliderOnScene = gameObjectOnScene.transform.GetChild(0).GetComponent<BoxCollider>();
+            var colliderCentralized = benchCentralized.transform.GetChild(0).GetComponent<BoxCollider>();
+
+            Assert.AreEqual(colliderCentralized.center, colliderOnScene.center);
+            Assert.AreEqual(colliderCentralized.size, colliderOnScene.size);
+            DestroyImmediate(gameObjectOnScene);
+        }
+
     }
+
+    private GameObject LoadAtPath(string path) => AssetDatabase.LoadAssetAtPath<GameObject>(path);
 }
