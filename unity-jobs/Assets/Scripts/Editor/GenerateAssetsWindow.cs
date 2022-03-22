@@ -27,6 +27,6 @@ public class GenerateAssetsWindow : EditorWindow
     }
     private void Centralize()
     {
-        GenerateAssetBundle.Centralize();
+        GenerateAssetBundle.TestCentralize();
     }
 }
