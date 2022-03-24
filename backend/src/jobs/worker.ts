@@ -3,10 +3,13 @@ import "dotenv/config";
 import { Worker } from "bullmq";
 import GenerateAssetBundleJob from "./GenerateAssetBundleJob";
 import redisConfig from "../config/redis";
+import { LogInfo } from "../utils/logger";
 
 const worker = new Worker(GenerateAssetBundleJob?.key, async job => {
+  const context = "Asset Bundle Job";
+  LogInfo("Started", context);
   await GenerateAssetBundleJob.handle();
-  console.log("Job finished");
+  LogInfo("Completed", context);
 }, { connection: redisConfig });
 
 worker.on('completed', job => {
