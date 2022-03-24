@@ -5,6 +5,7 @@
   "author": "Marcelo Ott",
   "license": "MIT",
   "dependencies": {
+    "@bull-board/express": "^3.10.1",
     "bullmq": "^1.77.2",
     "console-stamp": "^3.0.4",
     "cors": "^2.8.5",

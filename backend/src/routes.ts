@@ -2,6 +2,7 @@ import { Router, Response } from "express";
 import upload from "express-fileupload";
 import "dotenv/config";
 import Queue from "./services/Queue";
+
 import GenerateAssetBundleJob from "./jobs/GenerateAssetBundleJob";
 
 export const routes = Router();

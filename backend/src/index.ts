@@ -3,6 +3,7 @@ import { routes } from "./routes";
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
+import BullBoard from "./services/BullBoard";
 
 const context = "Iniciando servidor";
 LogInfo("Importou rotas", context);
@@ -29,7 +30,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json({ limit: "5mb" }));
+app.use('/admin/queues', BullBoard);
 app.use(routes);
+
 
 app.use((err, req, res: express.Response, next) => {
   if (!err) next();
