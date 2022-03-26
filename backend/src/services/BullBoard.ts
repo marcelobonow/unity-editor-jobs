@@ -12,5 +12,7 @@ createBullBoard({
   serverAdapter: serverAdapter
 });
 
+console.log("BULL!");
+
 serverAdapter.setBasePath('/admin/queues')
 export default serverAdapter.getRouter();

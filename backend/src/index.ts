@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import BullBoard from "./services/BullBoard";
-import { Setup } from "./jobs/worker";
+import { CreateWorker } from "./jobs/AssetBundleWorker";
 
 const context = "Iniciando servidor";
 LogInfo("Importou rotas", context);
@@ -47,6 +47,6 @@ process.on("uncaughtException", function (err) {
   LogError("Exceção não tratada no processo: " + err, context);
 });
 
-Setup();
+CreateWorker();
 
 export default server;

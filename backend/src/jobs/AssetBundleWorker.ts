@@ -1,16 +1,14 @@
-import "dotenv/config";
-
 import { Worker } from "bullmq";
-import { config } from "./GenerateAssetBundleJob";
+import { ProcessRequest, jobName } from "../models/GenerateAssetBundleModel";
 import redisConfig from "../config/redis";
 import { LogInfo } from "../utils/logger";
 
 
-export function Setup() {
-  const worker = new Worker(config?.key, async job => {
+export function CreateWorker() {
+  const worker = new Worker(jobName, async job => {
     const context = "Asset Bundle Job";
     LogInfo("Started", context);
-    const result = await config.handle(job);
+    await ProcessRequest(job);
     LogInfo("Terminou de adicionar: " + job.id, context);
   }, {
     concurrency: 1,
@@ -25,4 +23,5 @@ export function Setup() {
   worker.on('failed', (job, err) => {
     console.log(`${job.id} has failed with ${err.message}`);
   });
+  return worker;
 }
