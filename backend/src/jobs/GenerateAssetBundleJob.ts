@@ -1,29 +1,29 @@
-import { exec } from "child_process";
+import { Job } from "bullmq";
 import { LogInfo } from "../utils/logger";
 
-const unityEditorPath = process.env.UNITY_EDITOR_PATH;
-const unityProjectPath = process.env.UNITY_PROJECT_PATH;
+type BullJob = Job<any, any, string>;
 
-const config = {
+export let currentJob: BullJob = null;
+let promise;
+
+export const config = {
   key: "GenerateAssetBundle",
-  async handle() {
-    const context = "Generating asset bundle";
-    LogInfo("Opening unity", context);
+  async handle(job: BullJob) {
     return new Promise((resolve, reject) => {
-      exec(`"${unityEditorPath}" -projectPath "${unityProjectPath}" -executeMethod GenerateAssetBundle.CreatePrefab`, (error, stdout, stderr) => {
-        if (error) {
-          console.log(`error: ${error.message}`);
-          reject({ error });
-        }
-        if (stderr) {
-          console.log(`stderr: ${stderr}`);
-          reject({ error: stderr })
-        }
-        console.log(`stdout: ${stdout}`);
-        resolve({ message: stdout });
-      });
-    })
-  }
-}
+      promise = resolve;
+      const context = "Novo job";
+      currentJob = job;
+      LogInfo("Guardado job para quando unity terminar", context);
 
-export default config;
+      ///TODO: No start da aplicação iniciar o unity
+      //Se comunica com o unity fazendo um pooling 
+    });
+  }
+
+};
+
+export function Resolve() {
+  LogInfo("Resolve", "Resolve");
+  if (promise != null)
+    promise();
+}

@@ -26,7 +26,8 @@ public class GenerateAssetBundle : MonoBehaviour
         AssetImporter.GetAtPath(prefabPath).SetAssetBundleNameAndVariant("tempBundle", "");
         DestroyImmediate(gameObjectOnScene);
         BuildAssetBundles();
-        EditorApplication.Exit(0);
+        Debug.LogError("Erro de teste");
+        EditorApplication.Exit(-1);
     }
 
     public static void TestCentralize()

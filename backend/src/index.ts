@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import BullBoard from "./services/BullBoard";
+import { Setup } from "./jobs/worker";
 
 const context = "Iniciando servidor";
 LogInfo("Importou rotas", context);
@@ -40,11 +41,12 @@ app.use((err, req, res: express.Response, next) => {
   res.sendStatus(500);
 });
 
-
 const server = app.listen(port, () => LogInfo(`Servidor node iniciou na porta ${port}`, context));
 
 process.on("uncaughtException", function (err) {
   LogError("Exceção não tratada no processo: " + err, context);
 });
+
+Setup();
 
 export default server;

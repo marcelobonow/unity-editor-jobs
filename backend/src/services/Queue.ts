@@ -1,6 +1,6 @@
 import { Queue } from "bullmq";
 import redisConfig from "../config/redis";
 
-import GenerateAssetBundleJob from "../jobs/GenerateAssetBundleJob";
+import { config } from "../jobs/GenerateAssetBundleJob";
 
-export default new Queue(GenerateAssetBundleJob.key, { connection: redisConfig }); 
+export default new Queue(config.key, { connection: redisConfig }); 
