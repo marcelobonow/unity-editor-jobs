@@ -19,7 +19,7 @@ app.use(express.urlencoded({
 }));
 
 app.disable("x-powered-by");
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
   //Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão
   res.header("Access-Control-Allow-Origin", "*");
   //Quais são os métodos que a conexão pode realizar na API
@@ -35,9 +35,9 @@ app.use('/admin/queues', BullBoard);
 app.use(routes);
 
 
-app.use((err, req, res: express.Response, next) => {
-  if (!err) next();
-  LogError("Exceção não tratada pelos middleware: " + err, context);
+app.use((error: any, _req: express.Request, res: express.Response, next: () => void) => {
+  if (!error) next();
+  LogError("Exceção não tratada pelos middleware: " + error, context);
   res.sendStatus(500);
 });
 

@@ -5,8 +5,8 @@ import crypto from "crypto";
 export default {
   dest: path.resolve(__dirname, "..", "storage"),
   storage: multer.diskStorage({
-    destination: (req, file, callback) => { callback(null, path.resolve(__dirname, "..", "storage")) },
-    filename: (req, file, callback) => {
+    destination: (_req, _file, callback) => { callback(null, path.resolve(__dirname, "..", "storage")) },
+    filename: (_req, file, callback) => {
       crypto.randomBytes(16, (error, hash) => {
         if (error) callback(error, "");
 
@@ -16,7 +16,7 @@ export default {
     },
   }),
   limits: { fileSize: 16 * 1024 * 1024 },
-  fileFilter: (req: unknown, file: any, callback: any) => {
+  fileFilter: (_req: unknown, file: any, callback: any) => {
     const allowedMimes = [
       "image/jpeg",
       "image/jpg",

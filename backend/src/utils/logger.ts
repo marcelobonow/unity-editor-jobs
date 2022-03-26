@@ -47,14 +47,14 @@ logger.add(new winston.transports.Console({
 }));
 
 
-export function LogInfo(log: string, method: string) {
-  logger.info(`[${method}] ${log}`);
+export function LogInfo(log: string, context: string) {
+  logger.info(`[${context}] ${log}`);
 }
-export function LogWarning(log: string, method: string) {
-  logger.warn(`[${method}] ${log}`);
+export function LogWarning(log: string, context: string) {
+  logger.warn(`[${context}] ${log}`);
 }
-export function LogError(log: string, method: string) {
-  logger.error(`[${method}] ${log}`);
+export function LogError(log: string, context: string) {
+  logger.error(`[${context}] ${log}`);
 }
 
 export default logger;

@@ -7,6 +7,6 @@ import multerConfig from "./config/multerConfig";
 
 export const routes = Router();
 
-routes.get("/", (req, res) => res.send("OK"));
+routes.get("/", (_req, res) => res.send("OK"));
 routes.post("/assetBundles", multer(multerConfig).single("file"), AddJob);
 routes.post("/onFinishJob", FinishJob);

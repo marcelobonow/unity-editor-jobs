@@ -3,44 +3,47 @@ export const jobName = "GenerateAssetBundle";
 import { Job } from "bullmq";
 import Queue from "../services/Queue";
 import { LogInfo } from "../utils/logger";
+import { ErrorData } from "./ErrorData";
 
-type NewType = Job<any, any, string>;
 
-type BullJob = NewType;
+type BullJob = Job<any, any, string>;
 
 interface JobRunning {
   job: BullJob;
-  resolver: (any?) => void;
+  resolver: (arg0?: any) => void;
 }
 
-const jobsRunning: JobRunning[] = [];
+const jobsRunning: Map<string, JobRunning> = new Map();
 
 export async function AddJob(data: any) {
   await Queue.add(jobName, data);
 }
 
 export async function ProcessRequest(job: BullJob) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const context = "Novo job";
-    LogInfo("Iniciando novo job: " + job.id, context);
-    jobsRunning[job.id] = { job, resolver: resolve };
+    const jobId: string = job?.id || "0";
+    LogInfo("Iniciando novo job: " + jobId, context);
+    jobsRunning.set(jobId, { job, resolver: resolve });
 
     ///TODO: No start da aplicação iniciar o unity
     //Se comunica com o unity fazendo um pooling 
   });
 }
 
-export async function FinishJob(jobId: string, data: any) {
+export async function FinishJob(jobId: string, data: any): Promise<ErrorData | undefined> {
   const context = "Job finalizado";
   LogInfo("Buscando jobs ativos", context);
-  const job = jobsRunning[jobId];
+  const job = jobsRunning.get(jobId);
   if (job == null) {
+    const error = new ErrorData("Job not found", "Job ")
     LogInfo("Terminou o job mas não estava nos jobs rodando", context);
-    return;
+    return error;
   }
 
   LogInfo("Finalizando job " + jobId, context);
   job.resolver(data);
+  return;
 }
 
 export async function RecoverActiveJobs() {
@@ -50,7 +53,7 @@ export async function RecoverActiveJobs() {
 
   for (const job of activeJobs) {
     const jobData = job.data;
-    const jobId = job.id;
+    const jobId = job.id || "0";
     await Queue.remove(jobId)
     await Queue.add(jobName, jobData);
     LogInfo("Reiniciando job: " + jobId, context);

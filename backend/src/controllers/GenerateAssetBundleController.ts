@@ -15,8 +15,17 @@ export async function FinishJob(req: Request, res: Response) {
   LogInfo("Verificando parâmetros", context);
   const { jobId, data } = req.body;
 
-  if (!jobId)
-    return res.status(400).json({ message: "JobId não informado" });
+  if (!jobId) {
+    res.status(400).json({ message: "JobId não informado" });
+    return;
+  }
 
-  FinishJobModel(jobId, data);
+  const finishJobError = await FinishJobModel(jobId, data);
+  if (finishJobError != null) {
+    LogInfo("Erro finalizando job: " + finishJobError.message, context)
+    res.status(400).json({ message: "Job não encontrado" });
+    return
+  }
+
+  res.json({ success: true, jobId });
 }
